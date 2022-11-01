@@ -4,7 +4,7 @@ function Header() {
 
     const estilo = {background: "#008982"}
     return (
-        <div className='container' style={estilo}>
+        <div className='row' style={estilo}>
             <h1 align="center">Recycle App</h1>
         </div>
     )

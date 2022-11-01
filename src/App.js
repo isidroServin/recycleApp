@@ -3,66 +3,87 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import Cartita from './components/Cartita'
 import Ticket from './components/Ticket';
+import swal from 'sweetalert';
 
 function App () {
 
-    const [materiales, setMateriales] = useState([
-    {
-      material: 'Plastic', id: 0, price: 1.5
-    },
-    {
-      material: 'Metal', id: 1, price: 0.8
-    },
-    {
-      material: 'Paper', id: 2, price: 0.5
-    },
-    {
-      material: 'Glass', id: 3, price: 0.5
-    }
-    ]);
+    const arrInicial = 
+    [
+      {
+        material: 'Plastic', id: 0, price: 1.5, subtotal: 0, kilos: ''
+      },
+      {
+        material: 'Aluminum', id: 1, price: 0.8, subtotal: 0, kilos: ''
+      },
+      {
+        material: 'Paper', id: 2, price: 0.5, subtotal: 0, kilos: ''
+      },
+      {
+        material: 'Glass', id: 3, price: 0.5, subtotal: 0, kilos: ''
+      },
+      {
+        material: 'Cooper', id: 4, price: 0.7, subtotal: 0, kilos: ''
+      }
+    ];
 
-    const [ticket,setTicket] = useState(0);
+    const [materiales, setMateriales] = useState(arrInicial);
+    
+    useEffect(() => {
+      let granTotal = 0.0;
+      materiales.forEach( item => {
+        granTotal = granTotal + parseFloat(item.subtotal);
+      });
+      setTotal(granTotal.toFixed(2));
+    },[materiales])
 
-    useEffect(() =>{
-      if(ticket === 0) console.log("asdad")
-    }, [ticket]);
+    const [total, setTotal] = useState(0);
 
-    function handleSubmit(e){
+    const handleSubmit = e => {
       e.preventDefault();
-      setTicket(0)
       e.target.reset();
     }
-    
 
-    const agrega = (peso, precio) => {
-      let subtotal = peso *precio;
-      setTicket(ticket + subtotal);
+    const agrega = (id, peso) => { 
+      let newMateriales = [...materiales];
+      let precio = materiales[id].price;
+      let subtotal = (peso * precio).toFixed(2);
+      newMateriales[id] = {
+        material: materiales[id].material,
+        id: materiales[id].id,
+        price:materiales[id].price,
+        subtotal: subtotal,
+        kilos: peso
+      }
+      setMateriales(newMateriales)
     };
 
     const cambiaPrecio = (id) =>{
-      console.log(id);
       let newMateriales = [...materiales];
-      newMateriales[id] = {material: 'nuevo material', id: id, price: 414}
+      newMateriales[id] = {material: 'Nuevo Material', id: id, price: 0.7}
       setMateriales(newMateriales)
+    }
+
+    const limpia = () => {
+      setMateriales(arrInicial);
+      swal("Good job!", 'Purchase registered successfully', "success");
     }
 
     return (
         <div>
-          <Header/>
-          <div className='container'>
-            <form onSubmit= {handleSubmit} >
+          <Header/><br></br>
+          <div className='container text-center'>
+            <form onSubmit = {handleSubmit} >
               <div className='row'>
-                {materiales.map( mate => 
-                  <div className="col col-sm-3 col-md-3 col-xs-12" key={mate.id}>
-                  <Cartita cambiaPrecio={cambiaPrecio} idd={mate.id} agrega={agrega} price={mate.price} material={mate.material}/>
-                  </div>
-                )}
+                  {materiales.map( mate => 
+                    <div className='col' key={mate.id}>
+                    <Cartita cambiaPrecio={cambiaPrecio} materiales={mate} agrega={agrega} />
+                    </div>
+                  )}
               </div><br></br>
-              <div align="center" className='container'>
-                  <Ticket ticket={ticket} />
-              </div>
+                <div align="center" className='container'>
+                    <Ticket total={total} limpia={limpia} materiales={materiales} />
+                </div>
             </form>
-            
           </div>
         </div>
     );
