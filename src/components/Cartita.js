@@ -1,3 +1,4 @@
+import Joi from 'joi';
 import { useEffect, useState } from 'react';
 import { CardImg } from 'react-bootstrap';
 //import Button from 'react-bootstrap/Button';
@@ -12,18 +13,14 @@ function Cartita({cambiaPrecio, materiales, agrega}) {
     agrega(materiales.id, kilos);
   },[kilos])
 
+  const schemaKilos = Joi.number().precision(2);
+
   function handleChange(event){
-    //const re = /^(0|[1-9]\d*)$/;
-    //if (event.target.value === '' || re.test(event.target.value)) {
-      setKilos(event.target.value);
-    //}
+      console.log(schemaKilos.validate(event.target.value))
+      if( !schemaKilos.validate(event.target.value).error || event.target.value === ""  ) setKilos(event.target.value); 
     
   }
 
-  const btnStyle = {
-     "margin": "2%",
-     "background": "#008982"
-    }
 
   return (
     <div>
