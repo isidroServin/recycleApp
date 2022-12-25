@@ -73,14 +73,14 @@ function App () {
           <Header/><br></br>
           <div className='container text-center'>
             <form onSubmit = {handleSubmit} >
-              <div className='row'>
+              <div className='row justify-content-md-center'>
                   {materiales.map( mate => 
-                    <div className='col' key={mate.id}>
+                    <div className='col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2' key={mate.id}>
                     <Cartita cambiaPrecio={cambiaPrecio} materiales={mate} agrega={agrega} />
                     </div>
                   )}
               </div><br></br>
-                <div align="center" className='container'>
+                <div className='row justify-content-md-center'>
                     <Ticket total={total} limpia={limpia} materiales={materiales} />
                 </div>
             </form>

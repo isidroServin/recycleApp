@@ -1,17 +1,12 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import './home.css'
 
 function Ticket(props) {
-
-    const btnStyle = {
-        "margin": "2%",
-        "background": "green"
-       }
-
     return (
-        <div>
-            <Card style={{"width": "50%"}}>
+        <div  className="col-sm-10 col-md-10 col-lg-8" >
+            <Card>
                 <Card.Body>
                 <Card.Title>Buy Description</Card.Title>
                     <div>
@@ -52,7 +47,7 @@ function Ticket(props) {
                             
                         </table>
                     </div>
-                <Button style={btnStyle} onClick={props.limpia} type="reset">Done</Button>
+                <Button className='buttonStule' onClick={props.limpia} type="reset">Done</Button>
                 </Card.Body>
             </Card>
         </div>

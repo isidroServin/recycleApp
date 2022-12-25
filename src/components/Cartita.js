@@ -23,19 +23,21 @@ function Cartita({cambiaPrecio, materiales, agrega}) {
 
 
   return (
-    <div>
-      <Card >
-        <CardImg src={myImage} ></CardImg>
-        <Card.Body>
-          <Card.Title align="center">{materiales.material} </Card.Title>
-          <Card.Text>
-            Price/Kg: ${materiales.price}
-          </Card.Text>
-          <input value={materiales.kilos} onChange={handleChange} placeholder='Type the weight in Kg' className='form-control'></input><br></br>
-          {//<Button type='reset' style={btnStyle} onClick={() => cambiaPrecio(materiales.id)}  >Change price</Button> 
-          }
-        </Card.Body>
-      </Card>
+    <div >
+      <div>
+        <Card >
+          <CardImg src={myImage}  ></CardImg>
+          <Card.Body>
+            <Card.Title align="center">{materiales.material} </Card.Title>
+            <Card.Text>
+              Price/Kg: ${materiales.price}
+            </Card.Text>
+            <input value={materiales.kilos} onChange={handleChange} placeholder='Weight in Kg' className='form-control'></input><br></br>
+            {//<Button type='reset' style={btnStyle} onClick={() => cambiaPrecio(materiales.id)}  >Change price</Button> 
+            }
+          </Card.Body>
+        </Card>
+      </div>
     </div>
     
   );
